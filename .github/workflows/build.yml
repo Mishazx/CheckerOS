@@ -21,14 +21,15 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
-    - name: Set up C++ compiler
+    - name: Set up C++ compiler on Linux/macOS
       if: runner.os == 'Linux' || runner.os == 'macOS'
       run: |
-        sudo apt-get install g++ || brew install gcc
+        sudo apt-get update
+        sudo apt-get install -y g++ || brew install gcc
 
-    - name: Set up MSVC
+    - name: Set up C++ compiler on Windows
       if: runner.os == 'Windows'
-      uses: actions/setup-msbuild@v1
+      uses: actions/setup-dotnet@v1
 
     - name: Build
       run: |
