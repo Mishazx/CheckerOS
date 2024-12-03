@@ -14,7 +14,7 @@ OBJECTS = $(SOURCES:$(SRCDIR)/%.cpp=$(OBJDIR)/%.o)
 EXECUTABLE = $(BINDIR)/CheckerOS
 
 ifeq ($(OS),Windows_NT)
-    WIN_LIBS = -lole32 -loleaut32
+    WIN_LIBS = -lole32 -loleaut32 -lwbemuuid
 else
     WIN_LIBS =
 endif
