@@ -85,7 +85,9 @@ void getCPUInfo() {
     }
 
     IWbemServices *pSvc = NULL;
-    hres = pLoc->ConnectServer(_bstr_t(L"ROOT\\CIMV2"), NULL, NULL, 0, NULL, 0, 0, &pSvc);
+    BSTR bstrNamespace = SysAllocString(L"ROOT\\CIMV2");
+    hres = pLoc->ConnectServer(bstrNamespace, NULL, NULL, 0, NULL, 0, 0, &pSvc);
+    SysFreeString(bstrNamespace);
     if (FAILED(hres)) {
         std::cout << "Could not connect. Error code = " << hres << "\n";
         pLoc->Release();
@@ -103,7 +105,11 @@ void getCPUInfo() {
     }
 
     IEnumWbemClassObject* pEnumerator = NULL;
-    hres = pSvc->ExecQuery(bstr_t("WQL"), bstr_t("SELECT Name FROM Win32_Processor"), WBEM_FLAG_FORWARD_ONLY | WBEM_FLAG_RETURN_IMMEDIATELY, NULL, &pEnumerator);
+    BSTR bstrQueryLanguage = SysAllocString(L"WQL");
+    BSTR bstrQuery = SysAllocString(L"SELECT Name FROM Win32_Processor");
+    hres = pSvc->ExecQuery(bstrQueryLanguage, bstrQuery, WBEM_FLAG_FORWARD_ONLY | WBEM_FLAG_RETURN_IMMEDIATELY, NULL, &pEnumerator);
+    SysFreeString(bstrQueryLanguage);
+    SysFreeString(bstrQuery);
     if (FAILED(hres)) {
         std::cout << "Query for processor name failed. Error code = " << hres << "\n";
         pSvc->Release();
