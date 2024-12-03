@@ -4,6 +4,7 @@
 #include <windows.h>
 #include <sysinfoapi.h>
 #include <wbemidl.h>
+#include <comdef.h> 
 #pragma comment(lib, "wbemuuid.lib")
 #elif __linux__
 #include <sys/utsname.h>
@@ -131,7 +132,6 @@ void getCPUInfo() {
     pLoc->Release();
     pEnumerator->Release();
     CoUninitialize();
-
 #elif __linux__
     std::ifstream cpuinfo("/proc/cpuinfo");
     std::string line;
