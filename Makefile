@@ -13,8 +13,11 @@ OBJECTS = $(SOURCES:$(SRCDIR)/%.cpp=$(OBJDIR)/%.o)
 
 EXECUTABLE = $(BINDIR)/CheckerOS
 
-# Windows-specific libraries
-WIN_LIBS = -lole32 -loleaut32
+ifeq ($(OS),Windows_NT)
+    WIN_LIBS = -lole32 -loleaut32
+else
+    WIN_LIBS =
+endif
 
 all: $(EXECUTABLE)
 
