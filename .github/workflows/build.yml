@@ -55,7 +55,7 @@ jobs:
 
     - name: Upload Artifacts
       if: success()
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         name: CheckerOS-${{ matrix.os }}-${{ matrix.arch }}
         path: build/
